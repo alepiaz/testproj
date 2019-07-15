@@ -1,0 +1,3 @@
+number:
+    path: /number
+    controller: App\Controller\NumberController::number
