@@ -30,6 +30,7 @@
         "symfony/yaml": "4.3.*"
     },
     "require-dev": {
+        "fzaninotto/faker": "^1.8",
         "symfony/debug-pack": "*",
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*",

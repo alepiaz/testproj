@@ -3,28 +3,44 @@
 {%block title%}Companies{%endblock%}
 
 {%block body%}
+
   {%if companies%}
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Company Name</th>
-          <th>Actions</th>
+    <p style=" font-size:200%; ">Companies</p>
+    <div style="padding-top:30px;">
+      <table id="companies" class="table table-striped" align="center" style="width:60%; float:left; ">
+        <thead>
+          <tr>
+            <th width="10%"></th>
+            <th width="30%"  >Name</th>
+            <th></th>
 
-        </tr>
-      </thead>
-      <tbody>
-      {%for company in companies%}
-        <tr>
-          <td>{{company.name}}</td>
-          <td>
-            <a href="companies/{{company.name}}" class = "btn btn-dark">Show</a>
-          </td>
-        </tr>
-      {%endfor%}
+          </tr>
+        </thead>
+        <tbody>
+        {%for company in companies%}
+          <tr>
+            <td></td>
+            <td  style="vertical-align:middle">{{company.name}}</td>
+            <td align="center">
+              <a href="companies/{{company.name}}" class = "btn btn-dark">Show</a>
+              <a href="companies/edit/{{company.name}}" class = "btn btn-dark">Edit</a>
+              <a href="#" class = "btn btn-danger delete-company" data-id="{{company.name}}">Delete</a>
+            </td>
+          </tr>
+        {%endfor%}
 
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+      <a style="float:right;" href="companies/new" class = "btn btn-primary">Add a new company</a>
+    </div>
+
   {%else%}
-    <p> No companies to display  </p>
+    <a style="float:right; " href="companies/new" class = "btn btn-primary">Add a new company</a>
+    <p style="font-size:200%; padding-top: 50px; text-align: center;"> No company to display  </p>
   {%endif%}
+{%endblock%}
+
+
+{%block javascripts%}
+  <script src='/js/main.js'></script>
 {%endblock%}
