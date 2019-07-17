@@ -3,10 +3,17 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EmployeesRepository")
+ *
+ * @UniqueEntity(
+ *     fields={"firstname","lastname"},
+ *     errorPath = "lastname",
+ *     message="This name is already in use."
+ * )
  */
+
 class Employees
 {
     /**
@@ -119,7 +126,7 @@ class Employees
 
     public function setCompany(?Companies $company): self
     {
-        $company->addEmployee($this);
+
         $this->company = $company;
 
         return $this;

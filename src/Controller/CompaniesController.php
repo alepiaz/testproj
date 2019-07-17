@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextAreaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
+use Symfony\Component\Validator\Constraints\UniqueEntity;
 class CompaniesController extends AbstractController{
     /**
     * @Route("/companies", name="companies_list")
@@ -30,7 +30,7 @@ class CompaniesController extends AbstractController{
     public function new(Request $request){
         $company = new Companies();
 
-        $form = $this->createFormBuilder($company)->add('name',TextType::class, array('attr'=>array('class'=>'form-control')))
+        $form = $this->createFormBuilder($company)->add('name',TextType::class,array('attr'=>array('class'=>'form-control')))
           ->add('email', TextType::class, array('required'=>false,'attr'=>array('class'=>'form-control')))
           ->add('website',TextType::class, array('required'=>false,'attr'=>array('class'=>'form-control')))
           ->add('save', SubmitType::class, array('label'=>'Create', 'attr'=>array('class'=>'btn btn-primary mt-3')))
@@ -64,7 +64,7 @@ class CompaniesController extends AbstractController{
         if($company){
           $form = $this->createFormBuilder($employee)->add('firstname',TextType::class, array('label'=>'First name','attr'=>array('class'=>'form-control')))
             ->add('lastname',TextType::class, array('label'=>'Last name','attr'=>array('class'=>'form-control')))
-            ->add('company_id',TextType::class, array('label'=>'Company ID','attr'=>array('class'=>'form-control')))
+            ->add('company_id',HiddenType::class, array('data'=>$id))
             // ->add('company_id', ChoiceType::class, array('label'=>'Company ID ','attr'=>array('class'=>'custom-select mr-sm-2'),'choices'=>[$company->getId()=>$company->getId()]))
             ->add('email', TextType::class, array('required'=>false,'attr'=>array('class'=>'form-control')))
             ->add('number',TextType::class, array('required'=>false,'attr'=>array('class'=>'form-control')))
@@ -75,14 +75,11 @@ class CompaniesController extends AbstractController{
 
           if($form->isSubmitted() && $form->isValid()){
             $employee = $form->getData();
-
             $entityManager = $this->getDoctrine()->getManager();
-            $employee->setCompanyId(1);
-
             $entityManager->persist($employee);
             $entityManager->flush();
 
-            return $this->redirectToRoute('companies_show');
+            return $this->redirectToRoute('companies_show',['id'=>$id]);
 
           }
         }
@@ -92,6 +89,32 @@ class CompaniesController extends AbstractController{
 
     /**
     * @Route("/companies/edit/{id}", name="edit_company"), methods={"GET", "POST"}
+    */
+
+    public function edit(Request $request, $id){
+        $company = new Companies();
+        $company = $this->getDoctrine()->getRepository(Companies::class)->find($id);
+
+        $form = $this->createFormBuilder($company)->add('email', TextType::class, array('required'=>false,'attr'=>array('class'=>'form-control')))
+          ->add('website',TextType::class, array('required'=>false,'attr'=>array('class'=>'form-control')))
+          ->add('save', SubmitType::class, array('label'=>'Create', 'attr'=>array('class'=>'btn btn-primary mt-3')))
+          ->getForm();
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+          $entityManager = $this->getDoctrine()->getManager();
+          $entityManager->flush();
+
+          return $this->redirectToRoute('companies_list');
+
+        }
+
+        return $this->render('companies/edit.html.twig', array('form'=>$form->createView()));
+    }
+
+    /**
+    * @Route("/employees/edit/{id}", name="edit_company"), methods={"GET", "POST"}
     */
 
     public function edit(Request $request, $id){
