@@ -3,11 +3,52 @@
 {%block title%}{{company.name}}{%endblock%}
 
 {%block body%}
+  <a href="/companies">Go Back</a>
   <h1>{{ company.name }}</h1>
   <p>Email: {{ company.email }}</p>
   <p>
   Website: <a href="https://{{company.website}}">{{ company.website }}</a>
   </p>
   <hr>
-  <a href="/companies">Go Back</a>
+  {%if employees%}
+  <div style="float:right; padding-top: 50px;">
+    <p style="float:left; padding-right: 15px; padding-top: 5px;">Add a new employee to this company</p>
+    <a style="float:right;" href="/employees/new/{{company.id}}" class = "btn btn-primary">➕</a>
+  </div>
+  <div style="padding-top:30px;">
+    <table id="{{company.name}} employees" class="table table-striped" align="center" style="width:80%; float:left; ">
+      <thead>
+        <tr>
+          <th width="10%"></th>
+          <th   >First name</th>
+          <th   >Last name</th>
+          <th></th>
+
+        </tr>
+      </thead>
+      <tbody>
+
+      {%for employee in employees%}
+        <tr>
+          <td></td>
+          <td  style="vertical-align:middle">{{employee.firstname}}</td>
+          <td  style="vertical-align:middle">{{employee.lastname}}</td>
+          <td align="center">
+            <a href="employees/{{employee.id}}" class = "btn btn-dark">Show</a>
+            <a href="employees/edit/{{employee.id}}" class = "btn btn-dark">Edit</a>
+            <a href="#" class = "btn btn-danger delete-employee" data-id="{{employee.id}}">Delete</a>
+          </td>
+        </tr>
+      {%endfor%}
+
+      </tbody>
+    </table>
+    </div>
+  {%else%}
+    <div style="float:right; padding-top: 50px;">
+      <p style="float:left; padding-right: 15px; padding-top: 5px;">Add a new employee to this company</p>
+      <a style="float:right;" href="/employees/new/{{company.id}}" class = "btn btn-primary">➕</a>
+    </div>
+    <p style="font-size:200%; padding-top: 50px; text-align: center;"> No employee to display  </p>
+  {%endif%}
 {%endblock%}
