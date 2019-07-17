@@ -39,7 +39,7 @@ class Companies
     private $website;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Employees", mappedBy="company", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Employees", mappedBy="company", cascade={"persist","remove"})
      */
     private $employees;
 

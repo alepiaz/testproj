@@ -1,3 +1,20 @@
-number:
-    path: /number
-    controller: App\Controller\NumberController::number
+show_employee:
+    path: /companies/{id}
+    controller: App\Controller\CompaniesController::show
+
+delete_employee:
+    path: /employees/delete/{id}
+    controller: App\Controller\CompaniesController::delete_employee
+
+edit:
+    path: /companies/edit/{id}
+    controller: App\Controller\CompaniesController::edit
+
+edit_employee:
+  path: /employees/edit/{id}
+  controller: App\Controller\CompaniesController::edit_employee
+
+
+index:
+  path: /companies
+  controller: App\Controller\CompaniesController::index

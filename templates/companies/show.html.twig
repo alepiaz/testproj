@@ -16,7 +16,7 @@
     <a style="float:right;" href="/employees/new/{{company.id}}" class = "btn btn-primary">➕</a>
   </div>
   <div style="padding-top:30px;">
-    <table id="{{company.name}} employees" class="table table-striped" align="center" style="width:80%; float:left; ">
+    <table id="employees" class="table table-striped" align="center" style="width:80%; float:left; ">
       <thead>
         <tr>
           <th width="10%"></th>
@@ -51,4 +51,8 @@
     </div>
     <p style="font-size:200%; padding-top: 50px; text-align: center;"> No employee to display  </p>
   {%endif%}
+{%endblock%}
+
+{%block javascripts%}
+  <script src='/js/main.js'></script>
 {%endblock%}
