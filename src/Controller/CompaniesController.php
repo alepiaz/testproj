@@ -151,7 +151,7 @@ class CompaniesController extends AbstractController{
           $entityManager = $this->getDoctrine()->getManager();
           $entityManager->flush();
 
-          return $this->redirectToRoute('companies_show',['id'=>$id]);
+          return $this->redirectToRoute('companies_list');
 
         }
 
